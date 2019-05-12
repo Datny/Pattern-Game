@@ -1,0 +1,19 @@
+table{
+  border: 1px solid black;
+
+}
+td{
+  padding: 0px;
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  text-align: center;
+}
+tr{
+  border: 1px solid black;
+}
+.b1{
+  height: 100%;
+  width: 100px;
+  background-color: "white";
+}
