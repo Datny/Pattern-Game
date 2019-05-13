@@ -42,7 +42,8 @@ function changeColor() {
     var row = $(this).closest("tr").index();
     var column = $(this).closest("td").index();
     checkSurroundings(row, column);
-    recolor()
+    recolor();
+    checkForVictory();
     console.log(row + " " + column);
   });
 
@@ -57,13 +58,14 @@ function checkSurroundings(row, column) {
   on_top_el = choosen_el.parent().parent().next().find('td').eq(column).find('button');
   under_el = choosen_el.parent().parent().prev().find('td').eq(column).find('button');
 
+
+//  Loop it at some point
   if (choosen_el.hasClass("pressed")) {
     increaseSurroundings(next_el_h);
     increaseSurroundings(prv_el_h);
     increaseSurroundings(on_top_el);
     increaseSurroundings(under_el);
-  }
-  else if (!(choosen_el.hasClass("pressed"))) {
+  } else if (!(choosen_el.hasClass("pressed"))) {
     decreaseSurrounding(next_el_h);
     decreaseSurrounding(prv_el_h);
     decreaseSurrounding(on_top_el);
@@ -72,11 +74,18 @@ function checkSurroundings(row, column) {
 }
 // single button with click
 function checkAndIncreaseAttr(selector) {
-  if (selector.hasClass("pressed")) {
+  if (selector.hasClass("pressed") && typeof(selector.attr("clicked")) === "undefined") {
     selector.attr("clicked", 1);
-  } else {
-    selector.attr("clicked", 0);
-  }
+  } else if (selector.hasClass("pressed") && typeof(selector.attr("clicked")) !== "undefined"){
+    var attrInt = parseInt(selector.attr("clicked"));
+  attrInt++;
+  selector.attr("clicked", attrInt.toString());
+}
+else {
+  var attrInt = parseInt(selector.attr("clicked"));
+  attrInt--;
+  selector.attr("clicked", attrInt.toString())
+}
 
 }
 
@@ -99,4 +108,29 @@ function decreaseSurrounding(selector) {
     }
 
   }
+}
+function checkForVictory(){
+  x=0;
+ buttons = document.getElementsByClassName('b1');
+ if((buttons[1]).style.backgroundColor == "blue"){
+   x++;
+ }
+ if((buttons[3]).style.backgroundColor == "blue"){
+   x++;
+ }
+ if((buttons[5]).style.backgroundColor == "blue"){
+   x++;
+ }
+ if((buttons[9]).style.backgroundColor == "blue"){
+   x++;
+ }
+ if((buttons[11]).style.backgroundColor == "blue"){
+   x++;
+ }
+ if((buttons[6]).style.backgroundColor == "rgb(102, 0, 102)"){
+   x++;
+ }
+ if(x===6){
+   setTimeout(function(){alert("you have won!")}, 5000);
+ }
 }
